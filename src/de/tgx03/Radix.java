@@ -4,6 +4,14 @@ public final class Radix {
 
     private enum run {FIRST, FIRSTSOURCE, SECONDSOURCE}
 
+    /**
+     * Sorts a given long array using radix sort
+     * Make sure to correctly set how many bits are relevant, as lower values increase performance,
+     * but if set too low the result is wrong
+     * @param source The source array
+     * @param numberLength How many bits are relevant for sorting
+     * @return The sorted array
+     */
     public static long[] sort(long[] source, int numberLength) {
         LongList[] first = new LongList[2];
         LongList[] second = new LongList[2];
@@ -51,6 +59,14 @@ public final class Radix {
         }
     }
 
+    /**
+     * Sorts 2 given LongLists at the given position
+     * Keep in mind that the position argument isn't a count of the current position,
+     * but a long where every place is 0 except the one bit to be sorted by
+     * @param source The source lists
+     * @param position The current position to sort by
+     * @return Two LongLists which were sorted at the given position
+     */
     private static LongList[] sortPosition(LongList[] source, long position) {
         LongList[] result = new LongList[2];
         int size = Math.max(source[0].size(), source[1].size());
@@ -70,6 +86,11 @@ public final class Radix {
         return result;
     }
 
+    /**
+     * Merges 2 LongLists from an array into one long array
+     * @param source The source
+     * @return A long array holding the elements from the source
+     */
     private static long[] mergeLists(LongList[] source) {
         long[] result = new long[source[0].size() + source[1].size()];
         long[] first = source[0].toArray();
