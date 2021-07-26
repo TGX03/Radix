@@ -27,49 +27,11 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
                 case FIRSTSOURCE -> {
-                    for (int x = 0; x < first[0].size(); x++) {
-                        long element = first[0].get(x);
-                        long list = element & position;
-                        if (list == 0) {
-                            second[0].add(element);
-                        } else {
-                            second[1].add(element);
-                        }
-                    }
-                    for (int x = 0; x < first[1].size(); x++) {
-                        long element = first[1].get(x);
-                        long list = element & position;
-                        if (list == 0) {
-                            second[0].add(element);
-                        } else {
-                            second[1].add(element);
-                        }
-                    }
-                    first[0].clear();
-                    first[1].clear();
+                    second = sortPosition(first, position);
                     current = run.SECONDSOURCE;
                 }
                 case SECONDSOURCE -> {
-                    for (int x = 0; x < second[0].size(); x++) {
-                        long element = second[0].get(x);
-                        long list = element & position;
-                        if (list == 0) {
-                            first[0].add(element);
-                        } else {
-                            first[1].add(element);
-                        }
-                    }
-                    for (int x = 0; x < second[1].size(); x++) {
-                        long element = second[1].get(x);
-                        long list = element & position;
-                        if (list == 0) {
-                            first[0].add(element);
-                        } else {
-                            first[1].add(element);
-                        }
-                    }
-                    second[0].clear();
-                    second[1].clear();
+                    first = sortPosition(second, position);
                     current = run.FIRSTSOURCE;
                 }
             }
@@ -78,25 +40,43 @@ public final class Radix {
         switch (current) {
 
             case FIRSTSOURCE -> {
-                long[] result = new long[first[0].size() + first[1].size()];
-                long[] firstArr = first[0].toArray();
-                System.arraycopy(firstArr, 0, result, 0, firstArr.length);
-                long[] secondArr = first[1].toArray();
-                System.arraycopy(secondArr, 0, result, firstArr.length, secondArr.length);
-                return result;
+                return mergeLists(first);
             }
 
             case SECONDSOURCE -> {
-                long[] result = new long[second[0].size() + second[1].size()];
-                long[] firstArr = second[0].toArray();
-                System.arraycopy(firstArr, 0, result, 0, firstArr.length);
-                long[] secondArr = second[1].toArray();
-                System.arraycopy(secondArr, 0, result, firstArr.length, secondArr.length);
-                return result;
+                return mergeLists(second);
             }
 
             default -> throw new Error("Don't know what happened");
         }
+    }
+
+    private static LongList[] sortPosition(LongList[] source, long position) {
+        LongList[] result = new LongList[2];
+        int size = Math.max(source[0].size(), source[1].size());
+        result[0] = new LongList(size);
+        result[1] = new LongList(size);
+        for (int i = 0; i <= 1; i++) {
+            for (int x = 0; x < source[i].size(); x++) {
+                long element = source[i].get(x);
+                long list = element & position;
+                if (list == 0) {
+                    result[0].add(element);
+                } else {
+                    result[1].add(element);
+                }
+            }
+        }
+        return result;
+    }
+
+    private static long[] mergeLists(LongList[] source) {
+        long[] result = new long[source[0].size() + source[1].size()];
+        long[] first = source[0].toArray();
+        System.arraycopy(first, 0, result, 0, first.length);
+        long[] second = source[1].toArray();
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
     }
 
 }
