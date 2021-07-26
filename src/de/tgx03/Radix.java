@@ -8,6 +8,7 @@ public final class Radix {
      * Sorts a given long array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
+     * Doesn't work for negative numbers
      * @param source The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
