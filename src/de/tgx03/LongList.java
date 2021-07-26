@@ -65,7 +65,7 @@ public class LongList {
         currentLength = 0;
     }
 
-    public void ensureCapacity(int capacity) {
+    private void ensureCapacity(int capacity) {
         if (arr.length < capacity) {
             int length = Math.round(capacity * 1.5f);
             arr = Arrays.copyOf(arr, length);
