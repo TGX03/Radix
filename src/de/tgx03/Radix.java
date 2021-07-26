@@ -6,6 +6,17 @@ public final class Radix {
 
     /**
      * Sorts a given long array using radix sort
+     * This method assumes that all 64 bits are relevant
+     * Doesn't work for negative numbers
+     * @param source The source array
+     * @return The sorted array
+     */
+    public static long[] sort(long[] source) {
+        return sort(source, 64);
+    }
+
+    /**
+     * Sorts a given long array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
      * Doesn't work for negative numbers
