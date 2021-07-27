@@ -1,4 +1,4 @@
-package de.tgx03;
+package de.tgx03.primitivelist;
 
 import java.util.Arrays;
 

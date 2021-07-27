@@ -1,5 +1,7 @@
 package de.tgx03;
 
+import de.tgx03.primitivelist.LongList;
+
 public final class Radix {
 
     private enum run {FIRST, FIRSTSOURCE, SECONDSOURCE}
