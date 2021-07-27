@@ -2,9 +2,112 @@ package de.tgx03;
 
 import de.tgx03.primitivelist.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public final class Radix {
 
     private enum run {FIRST, FIRSTSOURCE, SECONDSOURCE}
+
+    /**
+     * Sorts a given object array using radix sort
+     * @param source The source array
+     * @param calculator How to determine the absolute value of an object
+     * @param <E> The type of object to sort
+     * @return The sorted array
+     */
+    public static <E> E[] sort(E[] source, ObjectValue<E> calculator) {
+        return sort(source, 64, calculator);
+    }
+
+    /**
+     * Sorts a given object array using radix sort
+     * Only uses how many bits are set to sort. Meaning lower numberlengths increase performance,
+     * however setting it too low results in wrong results
+     * @param source The source array
+     * @param numberLength How many bits of the absolute values are relevant
+     * @param calculator How to determine the absolute value of an object
+     * @param <E> The type of object to sort
+     * @return The sorted array
+     */
+    public static <E> E[] sort(E[] source, int numberLength, ObjectValue<E> calculator) {
+        if (source.length == 0) {
+            return source;
+        }
+        if (numberLength > 64) numberLength = 64;
+        List<ValuedObject<E>> first = new ArrayList<>();
+        List<ValuedObject<E>> second = new ArrayList<>();
+        long position = 1;
+        for (int i = 0; i < numberLength; i++) {
+            if (i == 0) {
+                for (E current : source) {
+                    ValuedObject<E> entry = new ValuedObject<>(current, calculator.value(current));
+                    long list = entry.value & position;
+                    if (list == 0) {
+                        first.add(entry);
+                    } else {
+                        second.add(entry);
+                    }
+                }
+            } else {
+                Tupel<List<ValuedObject<E>>> set = sort(first, second, position);
+                first = set.first;
+                second = set.second;
+            }
+            position = position<<1;
+        }
+        return mergeLists(first, second, numberLength == 64, source[0].getClass());
+    }
+
+    private static <E> Tupel<List<ValuedObject<E>>> sort(List<ValuedObject<E>> first, List<ValuedObject<E>> second, final long position) {
+        int size = Math.max(first.size(), second.size());
+        List<ValuedObject<E>> firstBucket = new ArrayList<>(size);
+        List<ValuedObject<E>> secondBucket = new ArrayList<>(size);
+        for (ValuedObject<E> current : first) {
+            long list = current.value & position;
+            if (list == 0) {
+                firstBucket.add(current);
+            } else {
+                secondBucket.add(current);
+            }
+        }
+        for (ValuedObject<E> current : second) {
+            long list = current.value & position;
+            if (list == 0) {
+                firstBucket.add(current);
+            } else {
+                secondBucket.add(current);
+            }
+        }
+        return new Tupel<List<ValuedObject<E>>>(firstBucket, secondBucket);
+    }
+
+    private static <E> E[] mergeLists(List<ValuedObject<E>> first, List<ValuedObject<E>> second, boolean negative, Class<?> EClass) {
+        try {
+            E[] result = (E[]) Array.newInstance(EClass, first.size() + second.size());
+            if (negative) {
+                Thread copier1 = new Thread(new Copier<>(second, result, 0));
+                copier1.start();
+                Thread copier2 = new Thread(new Copier<>(first, result, second.size()));
+                copier2.start();
+                copier1.join();
+                copier2.join();
+            } else {
+                Thread copier1 = new Thread(new Copier<>(first, result, 0));
+                copier1.start();
+                Thread copier2 = new Thread(new Copier<>(second, result, first.size()));
+                copier2.start();
+                copier1.join();
+                copier2.join();
+            }
+            return result;
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            System.exit(-1);
+            return null;
+        }
+    }
 
     /**
      * Sorts a given byte array using radix sort
@@ -556,4 +659,52 @@ public final class Radix {
         }
     }
 
+    /**
+     * This interface is used to determine the absolute value of an object,
+     * as comparisons often don't work for radix sort
+     * @param <E> The type of object to determine the value of
+     */
+    @FunctionalInterface
+    public interface ObjectValue<E> {
+
+        /**
+         * Determines the absolute value of an object
+         * @param object The object to determine the value of
+         * @return The value of the object
+         */
+        long value(E object);
+
+    }
+
+    /**
+     * Unboxes the contents of a list and copies them into an array
+     * @param <E> The type of value this copier copies
+     */
+    private static class Copier<E> implements Runnable {
+
+        private final List<ValuedObject<E>> source;
+        private final E[] target;
+        private final int targetPosition;
+
+        /**
+         * @param source The source list consisting of valued objects
+         * @param target The target array which holds the pure objects without their values
+         * @param targetPosition Where to start in the target array
+         */
+        public Copier(List<ValuedObject<E>> source, E[] target, int targetPosition) {
+            this.source = source;
+            this.target = target;
+            this.targetPosition = targetPosition;
+        }
+
+        public void run() {
+            for (int i = 0; i < source.size(); i++) {
+                target[i + targetPosition] = source.get(i).object;
+            }
+        }
+    }
+
+    private record ValuedObject<T>(T object, long value) {}
+
+    private record Tupel<K>(K first, K second) {}
 }
