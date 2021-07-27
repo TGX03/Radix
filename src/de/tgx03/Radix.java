@@ -8,13 +8,12 @@ import java.util.List;
 
 public final class Radix {
 
-    private enum run {FIRST, FIRSTSOURCE, SECONDSOURCE}
-
     /**
      * Sorts a given object array using radix sort
-     * @param source The source array
+     *
+     * @param source     The source array
      * @param calculator How to determine the absolute value of an object
-     * @param <E> The type of object to sort
+     * @param <E>        The type of object to sort
      * @return The sorted array
      */
     public static <E> E[] sort(E[] source, ObjectValue<E> calculator) {
@@ -25,10 +24,11 @@ public final class Radix {
      * Sorts a given object array using radix sort
      * Only uses how many bits are set to sort. Meaning lower numberlengths increase performance,
      * however setting it too low results in wrong results
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits of the absolute values are relevant
-     * @param calculator How to determine the absolute value of an object
-     * @param <E> The type of object to sort
+     * @param calculator   How to determine the absolute value of an object
+     * @param <E>          The type of object to sort
      * @return The sorted array
      */
     public static <E> E[] sort(E[] source, int numberLength, ObjectValue<E> calculator) {
@@ -55,7 +55,7 @@ public final class Radix {
                 first = set.first;
                 second = set.second;
             }
-            position = position<<1;
+            position = position << 1;
         }
         return mergeLists(first, second, numberLength == 64, source[0].getClass());
     }
@@ -112,6 +112,7 @@ public final class Radix {
     /**
      * Sorts a given byte array using radix sort
      * This method assumes that all 8 bits are relevant
+     *
      * @param source The source array
      * @return The sorted array
      */
@@ -123,7 +124,8 @@ public final class Radix {
      * Sorts a given byte array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
      */
@@ -159,7 +161,7 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
             }
-            position = (byte) (position<<1);
+            position = (byte) (position << 1);
         }
         switch (current) {
 
@@ -179,7 +181,8 @@ public final class Radix {
      * Sorts 2 given ByteLists at the given position
      * Keep in mind that the position argument isn't a count of the current position,
      * but an int where every place is 0 except the one bit to be sorted by
-     * @param source The source lists
+     *
+     * @param source   The source lists
      * @param position The current position to sort by
      * @return Two ByteLists which were sorted at the given position
      */
@@ -204,6 +207,7 @@ public final class Radix {
 
     /**
      * Merges 2 ByteLists from an array into one byte array
+     *
      * @param source The source
      * @return A long array holding the elements from the source
      */
@@ -218,6 +222,7 @@ public final class Radix {
     /**
      * Sorts a given char array using radix sort
      * This method assumes that all 16 bits are relevant
+     *
      * @param source The source array
      * @return The sorted array
      */
@@ -229,7 +234,8 @@ public final class Radix {
      * Sorts a given int array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
      */
@@ -265,7 +271,7 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
             }
-            position = (char) (position<<1);
+            position = (char) (position << 1);
         }
         switch (current) {
 
@@ -285,7 +291,8 @@ public final class Radix {
      * Sorts 2 given IntLists at the given position
      * Keep in mind that the position argument isn't a count of the current position,
      * but an int where every place is 0 except the one bit to be sorted by
-     * @param source The source lists
+     *
+     * @param source   The source lists
      * @param position The current position to sort by
      * @return Two IntLists which were sorted at the given position
      */
@@ -310,6 +317,7 @@ public final class Radix {
 
     /**
      * Merges 2 IntLists from an array into one long array
+     *
      * @param source The source
      * @return A long array holding the elements from the source
      */
@@ -324,6 +332,7 @@ public final class Radix {
     /**
      * Sorts a given short array using radix sort
      * This method assumes that all 16 bits are relevant
+     *
      * @param source The source array
      * @return The sorted array
      */
@@ -335,7 +344,8 @@ public final class Radix {
      * Sorts a given short array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
      */
@@ -371,7 +381,7 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
             }
-            position = (short) (position<<1);
+            position = (short) (position << 1);
         }
         switch (current) {
 
@@ -391,7 +401,8 @@ public final class Radix {
      * Sorts 2 given ShortLists at the given position
      * Keep in mind that the position argument isn't a count of the current position,
      * but a short where every place is 0 except the one bit to be sorted by
-     * @param source The source lists
+     *
+     * @param source   The source lists
      * @param position The current position to sort by
      * @return Two IntLists which were sorted at the given position
      */
@@ -416,6 +427,7 @@ public final class Radix {
 
     /**
      * Merges 2 ShortLists from an array into one long array
+     *
      * @param source The source
      * @return A long array holding the elements from the source
      */
@@ -430,6 +442,7 @@ public final class Radix {
     /**
      * Sorts a given int array using radix sort
      * This method assumes that all 32 bits are relevant
+     *
      * @param source The source array
      * @return The sorted array
      */
@@ -441,7 +454,8 @@ public final class Radix {
      * Sorts a given int array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
      */
@@ -454,7 +468,7 @@ public final class Radix {
             second[i] = new IntList();
         }
         run current = run.FIRST;
-       int position = 1;
+        int position = 1;
         for (int i = 0; i < numberLength; i++) {
             switch (current) {
                 case FIRST -> {
@@ -477,7 +491,7 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
             }
-            position = position<<1;
+            position = position << 1;
         }
         switch (current) {
 
@@ -497,7 +511,8 @@ public final class Radix {
      * Sorts 2 given IntLists at the given position
      * Keep in mind that the position argument isn't a count of the current position,
      * but an int where every place is 0 except the one bit to be sorted by
-     * @param source The source lists
+     *
+     * @param source   The source lists
      * @param position The current position to sort by
      * @return Two IntLists which were sorted at the given position
      */
@@ -509,7 +524,7 @@ public final class Radix {
         for (int i = 0; i <= 1; i++) {
             for (int x = 0; x < source[i].size(); x++) {
                 int element = source[i].get(x);
-               int list = element & position;
+                int list = element & position;
                 if (list == 0) {
                     result[0].add(element);
                 } else {
@@ -522,6 +537,7 @@ public final class Radix {
 
     /**
      * Merges 2 IntLists from an array into one long array
+     *
      * @param source The source
      * @return A long array holding the elements from the source
      */
@@ -536,6 +552,7 @@ public final class Radix {
     /**
      * Sorts a given long array using radix sort
      * This method assumes that all 64 bits are relevant
+     *
      * @param source The source array
      * @return The sorted array
      */
@@ -547,7 +564,8 @@ public final class Radix {
      * Sorts a given long array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * @param source The source array
+     *
+     * @param source       The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
      */
@@ -583,7 +601,7 @@ public final class Radix {
                     current = run.FIRSTSOURCE;
                 }
             }
-            position = position<<1;
+            position = position << 1;
         }
         switch (current) {
 
@@ -592,7 +610,7 @@ public final class Radix {
             }
 
             case SECONDSOURCE -> {
-                return mergeLists(second, numberLength == 64 );
+                return mergeLists(second, numberLength == 64);
             }
 
             default -> throw new Error("Don't know what happened");
@@ -603,7 +621,8 @@ public final class Radix {
      * Sorts 2 given LongLists at the given position
      * Keep in mind that the position argument isn't a count of the current position,
      * but a long where every place is 0 except the one bit to be sorted by
-     * @param source The source lists
+     *
+     * @param source   The source lists
      * @param position The current position to sort by
      * @return Two LongLists which were sorted at the given position
      */
@@ -628,6 +647,7 @@ public final class Radix {
 
     /**
      * Merges 2 LongLists from an array into one long array
+     *
      * @param source The source
      * @return A long array holding the elements from the source
      */
@@ -642,12 +662,13 @@ public final class Radix {
     /**
      * Merges 2 given arrays together.
      * Also orders them correctly if the values can be negative
-     * @param firstArr The first source array
-     * @param firstArrLength How long the first source array is
-     * @param secondArr The second source array
+     *
+     * @param firstArr        The first source array
+     * @param firstArrLength  How long the first source array is
+     * @param secondArr       The second source array
      * @param secondArrLength How long the second array is
-     * @param targetArr The target array
-     * @param negative Whether the values may be negative
+     * @param targetArr       The target array
+     * @param negative        Whether the values may be negative
      */
     private static void mergeArrays(Object firstArr, int firstArrLength, Object secondArr, int secondArrLength, Object targetArr, boolean negative) {
         if (negative) {
@@ -659,9 +680,12 @@ public final class Radix {
         }
     }
 
+    private enum run {FIRST, FIRSTSOURCE, SECONDSOURCE}
+
     /**
      * This interface is used to determine the absolute value of an object,
      * as comparisons often don't work for radix sort
+     *
      * @param <E> The type of object to determine the value of
      */
     @FunctionalInterface
@@ -669,6 +693,7 @@ public final class Radix {
 
         /**
          * Determines the absolute value of an object
+         *
          * @param object The object to determine the value of
          * @return The value of the object
          */
@@ -678,6 +703,7 @@ public final class Radix {
 
     /**
      * Unboxes the contents of a list and copies them into an array
+     *
      * @param <E> The type of value this copier copies
      */
     private static class Copier<E> implements Runnable {
@@ -687,8 +713,8 @@ public final class Radix {
         private final int targetPosition;
 
         /**
-         * @param source The source list consisting of valued objects
-         * @param target The target array which holds the pure objects without their values
+         * @param source         The source list consisting of valued objects
+         * @param target         The target array which holds the pure objects without their values
          * @param targetPosition Where to start in the target array
          */
         public Copier(List<ValuedObject<E>> source, E[] target, int targetPosition) {
@@ -704,7 +730,9 @@ public final class Radix {
         }
     }
 
-    private record ValuedObject<T>(T object, long value) {}
+    private record ValuedObject<T>(T object, long value) {
+    }
 
-    private record Tupel<K>(K first, K second) {}
+    private record Tupel<K>(K first, K second) {
+    }
 }

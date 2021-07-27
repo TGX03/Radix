@@ -19,6 +19,7 @@ public class ByteList {
 
     /**
      * Creates a new list with the given initial length
+     *
      * @param length The initial length of this list
      */
     public ByteList(int length) {
@@ -27,6 +28,7 @@ public class ByteList {
 
     /**
      * Creates a new list from a given byte array
+     *
      * @param list The array this holds initially
      */
     public ByteList(byte[] list) {
@@ -37,6 +39,7 @@ public class ByteList {
 
     /**
      * Returns the element at a given position or throws an error if the position doesn't exist
+     *
      * @param position The target position
      * @return The element at this position
      */
@@ -46,6 +49,7 @@ public class ByteList {
 
     /**
      * Adds a value to the end of this list
+     *
      * @param value The value to add
      */
     public void add(byte value) {
@@ -56,7 +60,8 @@ public class ByteList {
 
     /**
      * Sets the value at a specific position to the given value
-     * @param value The value to set
+     *
+     * @param value    The value to set
      * @param position The position to set
      */
     public void set(byte value, int position) {
@@ -69,6 +74,7 @@ public class ByteList {
 
     /**
      * Clears a given position and shifts all following elements one plaace to the left
+     *
      * @param position The position to clear
      * @return The value at this position
      */
@@ -95,6 +101,7 @@ public class ByteList {
     /**
      * Returns an array representing the current state of this list
      * As this is a primitive list, it's not needed to input an array
+     *
      * @return An array of the current state of this list
      */
     public byte[] toArray() {
@@ -111,6 +118,7 @@ public class ByteList {
 
     /**
      * If the array has less space than requested, its size is increased to 150% its current size
+     *
      * @param capacity The requested minimum capacity
      */
     private void ensureCapacity(int capacity) {
