@@ -25,6 +25,7 @@ public final class Radix {
      * @return The sorted array
      */
     public static long[] sort(long[] source, int numberLength) {
+        if (numberLength > 64) numberLength = 64;
         LongList[] first = new LongList[2];
         LongList[] second = new LongList[2];
         for (int i = 0; i < first.length; i++) {
