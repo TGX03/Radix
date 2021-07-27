@@ -9,7 +9,6 @@ public final class Radix {
     /**
      * Sorts a given long array using radix sort
      * This method assumes that all 64 bits are relevant
-     * Doesn't work for negative numbers
      * @param source The source array
      * @return The sorted array
      */
@@ -21,7 +20,6 @@ public final class Radix {
      * Sorts a given long array using radix sort
      * Make sure to correctly set how many bits are relevant, as lower values increase performance,
      * but if set too low the result is wrong
-     * Doesn't work for negative numbers
      * @param source The source array
      * @param numberLength How many bits are relevant for sorting
      * @return The sorted array
@@ -62,11 +60,11 @@ public final class Radix {
         switch (current) {
 
             case FIRSTSOURCE -> {
-                return mergeLists(first);
+                return mergeLists(first, numberLength == 64);
             }
 
             case SECONDSOURCE -> {
-                return mergeLists(second);
+                return mergeLists(second, numberLength == 64 );
             }
 
             default -> throw new Error("Don't know what happened");
@@ -105,12 +103,17 @@ public final class Radix {
      * @param source The source
      * @return A long array holding the elements from the source
      */
-    private static long[] mergeLists(LongList[] source) {
+    private static long[] mergeLists(LongList[] source, boolean negative) {
         long[] result = new long[source[0].size() + source[1].size()];
         long[] first = source[0].toArray();
-        System.arraycopy(first, 0, result, 0, first.length);
         long[] second = source[1].toArray();
-        System.arraycopy(second, 0, result, first.length, second.length);
+        if (negative) {
+            System.arraycopy(second, 0, result, 0, second.length);
+            System.arraycopy(first, 0, result, second.length, first.length);
+        } else {
+            System.arraycopy(first, 0, result, 0, first.length);
+            System.arraycopy(second, 0, result, first.length, second.length);
+        }
         return result;
     }
 
