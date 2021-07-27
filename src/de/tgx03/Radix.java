@@ -536,6 +536,16 @@ public final class Radix {
         return result;
     }
 
+    /**
+     * Merges 2 given arrays together.
+     * Also orders them correctly if the values can be negative
+     * @param firstArr The first source array
+     * @param firstArrLength How long the first source array is
+     * @param secondArr The second source array
+     * @param secondArrLength How long the second array is
+     * @param targetArr The target array
+     * @param negative Whether the values may be negative
+     */
     private static void mergeArrays(Object firstArr, int firstArrLength, Object secondArr, int secondArrLength, Object targetArr, boolean negative) {
         if (negative) {
             System.arraycopy(secondArr, 0, targetArr, 0, secondArrLength);
