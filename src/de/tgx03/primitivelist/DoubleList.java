@@ -70,7 +70,7 @@ public class DoubleList {
     }
 
     /**
-     * Clears a given position and shifts all following elements one plaace to the left
+     * Clears a given position and shifts all following elements one place to the left
      *
      * @param position The position to clear
      * @return The value at this position

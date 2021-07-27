@@ -80,7 +80,7 @@ public final class Radix {
                 secondBucket.add(current);
             }
         }
-        return new Tupel<List<ValuedObject<E>>>(firstBucket, secondBucket);
+        return new Tupel<>(firstBucket, secondBucket);
     }
 
     private static <E> E[] mergeLists(List<ValuedObject<E>> first, List<ValuedObject<E>> second, boolean negative, Class<?> EClass) {
@@ -706,22 +706,7 @@ public final class Radix {
      *
      * @param <E> The type of value this copier copies
      */
-    private static class Copier<E> implements Runnable {
-
-        private final List<ValuedObject<E>> source;
-        private final E[] target;
-        private final int targetPosition;
-
-        /**
-         * @param source         The source list consisting of valued objects
-         * @param target         The target array which holds the pure objects without their values
-         * @param targetPosition Where to start in the target array
-         */
-        public Copier(List<ValuedObject<E>> source, E[] target, int targetPosition) {
-            this.source = source;
-            this.target = target;
-            this.targetPosition = targetPosition;
-        }
+    private record Copier<E>(List<ValuedObject<E>> source, E[] target, int targetPosition) implements Runnable {
 
         public void run() {
             for (int i = 0; i < source.size(); i++) {
