@@ -104,7 +104,6 @@ public final class Radix {
             return result;
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
-            System.exit(-1);
             return null;
         }
     }
